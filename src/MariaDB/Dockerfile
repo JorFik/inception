@@ -17,5 +17,6 @@ VOLUME [ "/var/lib/mysql" ]
 
 HEALTHCHECK CMD ["mysqladmin", "ping", "--silent"]
 
+ENTRYPOINT ["/usr/bin/mysqld_safe"]
 
-CMD ["/usr/bin/mysqld_safe"]
+CMD ["--datadir=/var/lib/mysql"]
