@@ -1,0 +1,34 @@
+services:
+  nginx:
+    build: ./NGINX/
+    networks:
+      - inception
+
+  MariaDB:
+    build: ./MariaDB/
+    volumes:
+      - data_base:/var/lib/mysql
+    networks:
+      - inception
+    secrets:
+      - credentials
+
+  WordPress:
+    build: ./WordPress/
+    volumes:
+      - wp_data:/var/www/html
+    networks:
+      - inception
+
+volumes:
+  data_base:
+  wp_data:
+
+networks:
+  inception:
+    name: inception
+    driver: overlay
+
+secrets:
+  credentials:
+    file: ./secrets/credentials.env
