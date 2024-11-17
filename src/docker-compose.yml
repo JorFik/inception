@@ -22,7 +22,17 @@ services:
 
 volumes:
   data_base:
+    name: data_base
+    driver: local
+    driver_opts:
+      device: /home/jfikents/data/mysql
+      o: bind
   wp_data:
+    name: wp_data
+    driver: local
+    driver_opts:
+      device: /home/jfikents/data/wordpress
+      o: bind
 
 networks:
   inception:
