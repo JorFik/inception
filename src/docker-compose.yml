@@ -3,6 +3,7 @@ services:
     build: ./NGINX/
     networks:
       - inception
+    restart: always
 
   MariaDB:
     build: ./MariaDB/
@@ -12,6 +13,7 @@ services:
       - inception
     secrets:
       - credentials
+    restart: always
 
   WordPress:
     build: ./WordPress/
@@ -19,6 +21,7 @@ services:
       - wp_data:/var/www/html
     networks:
       - inception
+    restart: always
 
 volumes:
   data_base:
