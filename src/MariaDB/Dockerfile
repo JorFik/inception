@@ -17,6 +17,8 @@ VOLUME [ "/var/lib/mysql" ]
 
 HEALTHCHECK CMD ["mysqladmin", "ping", "--silent"]
 
+EXPOSE 3306
+
 ENTRYPOINT ["/sbin/tini", "--", "/usr/bin/mysqld_safe"]
 
 CMD ["--datadir=/var/lib/mysql"]
