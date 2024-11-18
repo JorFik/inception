@@ -4,6 +4,8 @@ services:
     networks:
       - inception
     restart: always
+    ports:
+      - 443:443
 
   MariaDB:
     build: ./MariaDB/
