@@ -3,7 +3,7 @@ FROM alpine:3.19
 
 COPY config_db.sh /tmp/config_db.sh
 
-RUN (apk add --no-cache mariadb-server && \
+RUN (apk add --no-cache mariadb-server tini && \
 	mkdir -p /var/lib/mysql && \
 	chown -R mysql:mysql /var/lib/mysql) || \
 	(echo "Failed to install MariaDB" >&2 ; exit 1) && \
@@ -17,6 +17,6 @@ VOLUME [ "/var/lib/mysql" ]
 
 HEALTHCHECK CMD ["mysqladmin", "ping", "--silent"]
 
-ENTRYPOINT ["/usr/bin/mysqld_safe"]
+ENTRYPOINT ["/sbin/tini", "--", "/usr/bin/mysqld_safe"]
 
 CMD ["--datadir=/var/lib/mysql"]
