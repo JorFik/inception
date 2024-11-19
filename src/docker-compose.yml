@@ -1,14 +1,7 @@
 services:
-  nginx:
-    build: ./NGINX/
-    networks:
-      - inception
-    restart: always
-    ports:
-      - 443:443
 
-  MariaDB:
-    build: ./MariaDB/
+  mariadb:
+    build: ./requirements/MariaDB/
     volumes:
       - data_base:/var/lib/mysql
     networks:
@@ -17,13 +10,25 @@ services:
       - credentials
     restart: always
 
-  WordPress:
-    build: ./WordPress/
+  wordpress:
+    depends_on:
+      - mariadb
+    build: ./requirements/WordPress/
     volumes:
       - wp_data:/var/www/html
     networks:
       - inception
     restart: always
+
+  nginx:
+    depends_on:
+      - wordpress
+    build: ./requirements/NGINX/
+    networks:
+      - inception
+    restart: always
+    ports:
+      - 443:443
 
 volumes:
   data_base:
@@ -46,4 +51,4 @@ networks:
 
 secrets:
   credentials:
-    file: ./secrets/credentials.env
+    file: ../secrets/credentials.env
