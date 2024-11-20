@@ -8,9 +8,18 @@ else
     exit 1
 fi
 
-service mysql start
-
 sed -i '/\[mysqld\]/a bind-address = 0.0.0.0' /etc/my.cnf
+
+/usr/bin/mysqld_safe --datadir=/var/lib/mysql &
+
+# Esperar a que MariaDB se inicie
+sleep 10
+
+# Verificar que MariaDB esté corriendo
+if ! pgrep mysqld > /dev/null; then
+    echo "MariaDB no se está ejecutando"
+    exit 1
+fi
 
 echo "CREATE DATABASE IF NOT EXISTS $DB_NAME ;" > wp_db.sql
 echo "CREATE USER IF NOT EXISTS '$DB_USR'@'%' IDENTIFIED BY '$DB_PWD' ;" >> wp_db.sql
@@ -19,6 +28,8 @@ echo "ALTER USER 'root'@'localhost' IDENTIFIED BY '$ROOT_PWD' ;" >> wp_db.sql
 echo "FLUSH PRIVILEGES;" >> wp_db.sql
 
 mysql < wp_db.sql
+
+mysqladmin -u root -p"$ROOT_PWD" shutdown
 
 rm wp_db.sql
 
