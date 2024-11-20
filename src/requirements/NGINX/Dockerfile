@@ -6,4 +6,4 @@ EXPOSE 443 9000
 
 ENTRYPOINT [ "nginx" ]
 
-CMD ["arg"]
+CMD  [ "-g", "daemon off;" ]
