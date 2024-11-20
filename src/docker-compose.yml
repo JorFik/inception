@@ -18,6 +18,8 @@ services:
       - wp_data:/var/www/html
     networks:
       - inception
+    secrets:
+      - credentials
     restart: always
     environment:
       - DOMAIN_NAME=jfikents.42.fr
