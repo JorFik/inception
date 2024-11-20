@@ -19,6 +19,9 @@ services:
     networks:
       - inception
     restart: always
+    environment:
+      - DOMAIN_NAME=jfikents.42.fr
+      - WP_TITLE=Inception
 
   nginx:
     depends_on:
