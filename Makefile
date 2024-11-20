@@ -6,11 +6,15 @@
 #    By: JFikents <Jfikents@student.42Heilbronn.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/19 16:17:35 by JFikents          #+#    #+#              #
-#    Updated: 2024/11/20 14:38:20 by JFikents         ###   ########.fr        #
+#    Updated: 2024/11/20 16:49:44 by JFikents         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 DOCKER_COMPOSE=docker-compose -f src/docker-compose.yml
+
+build:
+	$(DOCKER_COMPOSE) up --build
+.PHONY: build
 
 start: start_swarm
 	$(DOCKER_COMPOSE) up
