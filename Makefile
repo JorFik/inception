@@ -6,16 +6,18 @@
 #    By: JFikents <Jfikents@student.42Heilbronn.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/19 16:17:35 by JFikents          #+#    #+#              #
-#    Updated: 2024/11/19 16:37:47 by JFikents         ###   ########.fr        #
+#    Updated: 2024/11/20 14:38:20 by JFikents         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+DOCKER_COMPOSE=docker-compose -f src/docker-compose.yml
+
 start: start_swarm
-	docker-compose -f src/docker-compose.yml up
+	$(DOCKER_COMPOSE) up
 .PHONY: start
 
 stop:
-	docker-compose down
+	$(DOCKER_COMPOSE) down
 .PHONY: stop
 
 start_swarm:
@@ -25,3 +27,11 @@ start_swarm:
 	fi
 .PHONY: start_swarm
 
+clean:
+	$(DOCKER_COMPOSE) down --volumes --remove-orphans
+	$(DOCKER_COMPOSE) down --rmi all
+	docker system prune -a --volumes -f
+.PHONY: clean
+
+re: clean start
+.PHONY: re
