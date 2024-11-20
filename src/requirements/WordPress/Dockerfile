@@ -1,17 +1,21 @@
 FROM alpine:3.19
 
-RUN (apk add --no-cache curl php83-fpm php83-mysqli tini && \
+WORKDIR /var/www/html
+
+COPY tools/config.sh /tmp/config.sh
+
+RUN (apk add --no-cache curl php82 php82-fpm php82-mysqli php82-phar tini && \
 	mkdir -p /var/www/html && \
-	chown -R nobody:nobody /var/www/html) || \
-	(echo "Failed to install dependencies" >&2 ; exit 1)
+	chown -R nobody:nobody /var/www/html) \
+	|| (echo "Failed to install dependencies" >&2 ; exit 1);\
+	(chmod +x /tmp/config.sh) \
+	|| (echo "Failed to prepare script for WordPress" >&2 ; exit 0)
 
 EXPOSE 9000
-
-WORKDIR /var/www/html
 
 # Healthcheck
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 CMD curl -f https://jfikents.42.fr:9000 || exit 1
 
 ENTRYPOINT [ "/sbin/tini", "--" ]
 
-CMD [ "/usr/sbin/php-fpm83", "-F" ]
+CMD [ "/tmp/config.sh" ]
