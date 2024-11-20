@@ -12,7 +12,7 @@ source /run/secrets/credentials
 
 sed -i -r "s/database/$DB_NAME/1"		wp-config.php
 sed -i -r "s/database_user/$DB_USR/1"	wp-config.php
-sed -i -r "s/password/$DB_PWD/1"	wp-config.php
+sed -i -r "s/password/$DB_PWD/1"		wp-config.php
 sed -i -r "s/localhost/mariadb/1"		wp-config.php
 
 # Set up Admin user

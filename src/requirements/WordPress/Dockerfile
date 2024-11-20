@@ -11,4 +11,4 @@ WORKDIR /var/www/html
 
 ENTRYPOINT [ "/sbin/tini", "--" ]
 
-CMD [ "php-fpm", "-F" ]
+CMD [ "/usr/sbin/php-fpm83", "-F" ]
