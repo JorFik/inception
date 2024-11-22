@@ -3,9 +3,12 @@
 curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 chmod +x wp-cli.phar
 mv wp-cli.phar /usr/local/bin/wp
-
-wp core download --path=/var/www/html --allow-root
-mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
+if [ -z "$(ls -A /var/www/html)" ]; then
+    wp core download --path=/var/www/html --allow-root
+    mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
+else
+    echo "WordPress is already installed."
+fi
 
 if [ -f /run/secrets/credentials ]; then
     source /run/secrets/credentials
@@ -14,11 +17,13 @@ else
     exit 1
 fi
 
+sleep 10
+
 # Change placeholders in wp-config.php
-sed -i -r "s/wordpress_name_here/$DB_NAME/1" 	wp-config.php
+sed -i -r "s/database_name_here/$DB_NAME/1" 	wp-config.php
 sed -i -r "s/username_here/$DB_USR/1" 			wp-config.php
 sed -i -r "s/password_here/$DB_PWD/1" 			wp-config.php
-sed -i -r "s/localhost/mariadb/1" 				wp-config.php
+sed -i -r "s/localhost/src_mariadb_1/1" 	wp-config.php
 
 # Set up Admin user
 wp core install --url=$DOMAIN_NAME/ --title=$WP_TITLE --admin_user=$WP_ADMIN --admin_password=$WP_ADMIN_PWD --admin_email=$WP_ADMIN_EMAIL --skip-email --allow-root

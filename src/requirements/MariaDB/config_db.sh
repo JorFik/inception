@@ -8,12 +8,12 @@ else
     exit 1
 fi
 
-sed -i '/\[mysqld\]/a bind-address = 0.0.0.0' /etc/my.cnf
+sed -i '/\[mysqld\]/a bind-address = 0.0.0.0\nport = 3306\ndatadir=/var/lib/mysql\nlog-error = /var/log/mysql/error.log' /etc/my.cnf
 
 /usr/bin/mysqld_safe --datadir=/var/lib/mysql &
 
 # Esperar a que MariaDB se inicie
-sleep 10
+sleep 5
 
 # Verificar que MariaDB esté corriendo
 if ! pgrep mysqld > /dev/null; then
@@ -27,7 +27,7 @@ echo "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USR'@'%' ;" >> wp_db.sql
 echo "ALTER USER 'root'@'localhost' IDENTIFIED BY '$ROOT_PWD' ;" >> wp_db.sql
 echo "FLUSH PRIVILEGES;" >> wp_db.sql
 
-mysql < wp_db.sql
+mysql -u root -p"$ROOT_PWD" < wp_db.sql
 
 mysqladmin -u root -p"$ROOT_PWD" shutdown
 

@@ -5,8 +5,9 @@ COPY config_db.sh /tmp/config_db.sh
 VOLUME [ "/var/lib/mysql" ]
 
 RUN (apk add --no-cache mariadb mariadb-client tini && \
-	mkdir -p /var/lib/mysql && \
-	chown -R mysql:mysql /var/lib/mysql) || \
+	mkdir -p /var/lib/mysql /var/log/mysql && \
+	chown -R mysql:mysql /var/lib/mysql && \
+	chown -R mysql:mysql /var/log/mysql) || \
 	(echo "Failed to install MariaDB" >&2 ; exit 1) && \
 	(mysql_install_db --user=mysql --datadir=/var/lib/mysql && \
 	chmod +x /tmp/config_db.sh) || \
