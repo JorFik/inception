@@ -42,11 +42,11 @@ wp user create $WP_USR $WP_USR_EMAIL --role=author --user_pass=$WP_USR_PWD --all
 wp theme install twentytwentytwo --activate --allow-root
 
 # Set up plugins
-wp plugin install redis-cache --activate --allow-root
+# wp plugin install redis-cache --activate --allow-root
 
 sed -i 's/listen = \/run\/php\/php82-fpm.sock/listen = 9000/g' /etc/php82/php-fpm.d/www.conf
 
 # Enable Redis
-wp redis enable --allow-root
+# wp redis enable --allow-root
 
 /usr/sbin/php-fpm82 -F
