@@ -8,7 +8,7 @@ else
     exit 1
 fi
 
-sed -i '/\[mysqld\]/a bind-address = 0.0.0.0\nport = 3306\ndatadir=/var/lib/mysql\nlog-error = /var/log/mysql/error.log' /etc/my.cnf
+mv /tmp/my.cnf /etc/my.cnf
 
 /usr/bin/mysqld_safe --datadir=/var/lib/mysql &
 

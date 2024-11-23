@@ -18,8 +18,6 @@ else
     exit 1
 fi
 
-sleep 10
-
 # Change placeholders in wp-config.php
 sed -i -r "s/database_name_here/$DB_NAME/1" 	wp-config.php
 sed -i -r "s/username_here/$DB_USR/1" 			wp-config.php

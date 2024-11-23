@@ -6,7 +6,7 @@
 #    By: JFikents <Jfikents@student.42Heilbronn.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/19 16:17:35 by JFikents          #+#    #+#              #
-#    Updated: 2024/11/20 16:49:44 by JFikents         ###   ########.fr        #
+#    Updated: 2024/11/23 19:15:40 by JFikents         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,20 +16,13 @@ build:
 	$(DOCKER_COMPOSE) up --build
 .PHONY: build
 
-start: start_swarm
+start:
 	$(DOCKER_COMPOSE) up
 .PHONY: start
 
 stop:
 	$(DOCKER_COMPOSE) down
 .PHONY: stop
-
-start_swarm:
-	@if ! docker info | grep -q "Swarm: active";\
-	then\
-		docker swarm init;\
-	fi
-.PHONY: start_swarm
 
 clean:
 	$(DOCKER_COMPOSE) down --volumes --remove-orphans

@@ -12,7 +12,8 @@ services:
 
   wordpress:
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
     build: ./requirements/WordPress/
     volumes:
       - wp_data:/var/www/html
@@ -52,7 +53,7 @@ volumes:
 networks:
   inception:
     name: inception
-    driver: overlay
+    driver: bridge
 
 secrets:
   credentials:
