@@ -5,7 +5,8 @@ chmod +x wp-cli.phar
 mv wp-cli.phar /usr/local/bin/wp
 if [ -z "$(ls -A /var/www/html)" ]; then
     wp core download --path=/var/www/html --allow-root
-    mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
+    mv /tmp/wp-config.php /var/www/html/wp-config.php
+    rm /var/www/html/wp-config-sample.php
 else
     echo "WordPress is already installed."
 fi
@@ -23,7 +24,16 @@ sleep 10
 sed -i -r "s/database_name_here/$DB_NAME/1" 	wp-config.php
 sed -i -r "s/username_here/$DB_USR/1" 			wp-config.php
 sed -i -r "s/password_here/$DB_PWD/1" 			wp-config.php
-sed -i -r "s/localhost/src_mariadb_1/1" 	wp-config.php
+sed -i -r "s/localhost/src_mariadb_1:3306/1" 	wp-config.php
+
+# Fetch unique keys and salts
+curl -s https://api.wordpress.org/secret-key/1.1/salt/ > salts.txt
+
+# Insert keys and salts into wp-config.php
+sed -i '/insert_keys_and_salts_here/r salts.txt' wp-config.php
+sed -i '/insert_keys_and_salts_here/d' wp-config.php
+
+rm salts.txt
 
 # Set up Admin user
 wp core install --url=$DOMAIN_NAME/ --title=$WP_TITLE --admin_user=$WP_ADMIN --admin_password=$WP_ADMIN_PWD --admin_email=$WP_ADMIN_EMAIL --skip-email --allow-root

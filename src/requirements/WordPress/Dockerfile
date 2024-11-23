@@ -2,7 +2,7 @@ FROM alpine:3.19
 
 WORKDIR /var/www/html
 
-COPY tools/config.sh /tmp/config.sh
+COPY tools/config.sh tools/wp-config.php /tmp/
 
 RUN (apk add --no-cache curl php82 php82-fpm php82-mysqli php82-phar tini && \
 	mkdir -p /var/www/html && \
