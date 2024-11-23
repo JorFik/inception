@@ -33,4 +33,4 @@ mysqladmin -u root -p"$ROOT_PWD" shutdown
 
 rm wp_db.sql
 
-/usr/bin/mysqld_safe --datadir=/var/lib/mysql
+exec /usr/bin/mysqld_safe --datadir=/var/lib/mysql

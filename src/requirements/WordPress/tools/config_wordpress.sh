@@ -49,4 +49,4 @@ sed -i 's/listen = \/run\/php\/php82-fpm.sock/listen = 9000/g' /etc/php82/php-fp
 # Enable Redis
 # wp redis enable --allow-root
 
-/usr/sbin/php-fpm82 -F
+exec /usr/sbin/php-fpm82 -F
