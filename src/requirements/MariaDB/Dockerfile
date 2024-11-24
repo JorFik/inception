@@ -13,7 +13,7 @@ RUN (apk add --no-cache mariadb mariadb-client tini && \
 	chmod +x /tmp/config_mariadb.sh) || \
 	(echo "Failed to prepare script for MariaDB" >&2 ; exit 1)
 
-HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 CMD ["mysqladmin", "ping", "--silent"]
+HEALTHCHECK --interval=5s --timeout=10s --start-period=10s --retries=3 CMD ["mysqladmin", "ping", "--silent"]
 
 EXPOSE 3306
 
