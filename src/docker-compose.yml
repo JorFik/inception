@@ -28,13 +28,17 @@ services:
 
   nginx:
     depends_on:
-      - wordpress
+      wordpress:
+        condition: service_started
     build: ./requirements/NGINX/
     networks:
       - inception
     restart: always
     ports:
       - 443:443
+    environment:
+      - DOMAIN_NAME=jfikents.42.fr
+      - WP_TITLE=Inception
 
 volumes:
   data_base:
