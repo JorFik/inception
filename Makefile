@@ -6,7 +6,7 @@
 #    By: JFikents <Jfikents@student.42Heilbronn.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/19 16:17:35 by JFikents          #+#    #+#              #
-#    Updated: 2024/11/23 19:15:40 by JFikents         ###   ########.fr        #
+#    Updated: 2024/11/25 00:02:21 by JFikents         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,5 +30,5 @@ clean:
 	docker system prune -a --volumes -f
 .PHONY: clean
 
-re: clean start
+re: clean build
 .PHONY: re
