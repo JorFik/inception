@@ -47,12 +47,14 @@ volumes:
     driver_opts:
       device: /home/jfikents/data/mysql
       o: bind
+      type: bind
   wp_data:
     name: wp_data
     driver: local
     driver_opts:
       device: /home/jfikents/data/wordpress
       o: bind
+      type: bind
 
 networks:
   inception:
