@@ -8,16 +8,30 @@ else
     exit 1
 fi
 
+(mkdir -p /var/lib/mysql /var/log/mysql && \
+chown -R mysql:mysql /var/lib/mysql && \
+chown -R mysql:mysql /var/log/mysql && \
+mysql_install_db --user=mysql --datadir=/var/lib/mysql) || \
+	(echo "Failed to install MariaDB" >&2 ; exit 1)
+
 mv /tmp/my.cnf /etc/my.cnf
 
 /usr/bin/mysqld_safe --datadir=/var/lib/mysql &
 
-# Esperar a que MariaDB se inicie
-sleep 5
+i=30
+while [ $i -gt 0 ]; do
+    if mysqladmin ping &>/dev/null; then
+        break
+    fi
+    echo 'Esperando a que MariaDB se inicie...'
+    sleep 1
+    i=$((i-1))
+done
 
 # Verificar que MariaDB esté corriendo
 if ! pgrep mysqld > /dev/null; then
     echo "MariaDB no se está ejecutando"
+    cat /var/lib/mysql/*.err
     exit 1
 fi
 
