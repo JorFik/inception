@@ -6,7 +6,7 @@
 #    By: JFikents <Jfikents@student.42Heilbronn.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/19 16:17:35 by JFikents          #+#    #+#              #
-#    Updated: 2024/11/25 00:02:21 by JFikents         ###   ########.fr        #
+#    Updated: 2024/11/25 10:48:55 by JFikents         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,8 @@ stop:
 .PHONY: stop
 
 clean:
+	@sudo rm -rf /home/jfikents/data/mysql/*
+	@sudo rm -rf /home/jfikents/data/wordpress/*
 	$(DOCKER_COMPOSE) down --volumes --remove-orphans
 	$(DOCKER_COMPOSE) down --rmi all
 	docker system prune -a --volumes -f
