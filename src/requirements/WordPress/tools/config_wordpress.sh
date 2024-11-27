@@ -16,7 +16,7 @@ install_wp_cli()
 
 execute_php_in_port_9000()
 {
-    sed -i 's/listen = \/run\/php\/php82-fpm.sock/listen = 9000/g' /etc/php82/php-fpm.d/www.conf
+    sed -i 's/listen = 127.0.0.1:9000/listen = 9000/g' /etc/php82/php-fpm.d/www.conf
     exec /usr/sbin/php-fpm82 -F
 }
 
