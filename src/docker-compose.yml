@@ -29,7 +29,7 @@ services:
   nginx:
     depends_on:
       wordpress:
-        condition: service_started
+        condition: service_healthy
     build: ./requirements/NGINX/
     networks:
       - inception

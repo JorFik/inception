@@ -14,7 +14,7 @@ RUN (apk add --no-cache curl php82 php82-fpm php82-mysqli php82-phar php82-iconv
 EXPOSE 9000
 
 # Healthcheck
-HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 CMD [ "/tmp/Healthcheck.sh" ]
+HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 CMD [ "/tmp/healthcheck.sh" ]
 
 ENTRYPOINT [ "/sbin/tini", "--" ]
 
