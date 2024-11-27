@@ -23,14 +23,14 @@ while [ $i -gt 0 ]; do
     if mysqladmin ping &>/dev/null; then
         break
     fi
-    echo 'Esperando a que MariaDB se inicie...'
+    echo 'Waiting for MariaDB to start ...'
     sleep 1
     i=$((i-1))
 done
 
 # Verificar que MariaDB esté corriendo
 if ! pgrep mysqld > /dev/null; then
-    echo "MariaDB no se está ejecutando"
+    echo "MariaDB failed to start" >&2
     cat /var/lib/mysql/*.err
     exit 1
 fi
@@ -41,7 +41,7 @@ echo "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USR'@'%' ;" >> wp_db.sql
 echo "ALTER USER 'root'@'localhost' IDENTIFIED BY '$ROOT_PWD' ;" >> wp_db.sql
 echo "FLUSH PRIVILEGES;" >> wp_db.sql
 
-mysql -u root -p"$ROOT_PWD" < wp_db.sql
+mysql < wp_db.sql
 
 mysqladmin -u root -p"$ROOT_PWD" shutdown
 
