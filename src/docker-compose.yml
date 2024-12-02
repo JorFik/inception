@@ -25,6 +25,8 @@ services:
     environment:
       - DOMAIN_NAME=jfikents.42.fr
       - WP_TITLE=Inception
+    expose:
+      - "9000"
 
   nginx:
     depends_on:
@@ -39,6 +41,8 @@ services:
     environment:
       - DOMAIN_NAME=jfikents.42.fr
       - WP_TITLE=Inception
+    volumes:
+      - wp_data:/var/www/html
 
 volumes:
   data_base:

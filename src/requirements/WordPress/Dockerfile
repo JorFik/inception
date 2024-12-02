@@ -7,7 +7,7 @@ COPY tools/config_wordpress.sh tools/wp-config.php tools/healthcheck.sh /tmp/
 RUN (apk add --no-cache curl php82 php82-fpm php82-mysqli php82-phar php82-iconv tini && \
 	mkdir -p /var/www/html && \
 	chown -R nobody:nobody /var/www/html) \
-	|| (echo "Failed to install dependencies" >&2 ; exit 1);\
+	|| (echo "Failed to install dependencies" >&2 ; exit 1); \
 	(chmod +x /tmp/config_wordpress.sh /tmp/healthcheck.sh) \
 	|| (echo "Failed to prepare scripts for WordPress" >&2 ; exit 0)
 
