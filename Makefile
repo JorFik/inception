@@ -6,7 +6,7 @@
 #    By: JFikents <Jfikents@student.42Heilbronn.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/19 16:17:35 by JFikents          #+#    #+#              #
-#    Updated: 2024/11/25 10:48:55 by JFikents         ###   ########.fr        #
+#    Updated: 2024/12/17 18:32:01 by JFikents         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,9 @@ build:
 start:
 	$(DOCKER_COMPOSE) up
 .PHONY: start
+
+ps:
+	$(DOCKER_COMPOSE) ps
 
 stop:
 	$(DOCKER_COMPOSE) down
